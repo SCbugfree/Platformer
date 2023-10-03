@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //Fliping X-scale is the fliping of the whole obejct (including sprite) sometimes might affect some physics
 public class PlayerControl : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerControl : MonoBehaviour
     SpriteRenderer mySprite;
 
     bool grounded = true;
+    public Sprite spr_EndFall;
+    public Sprite spr_EndJump;
 
     public float castDist = 1f;
     public float jumpPower = 100f;
@@ -34,21 +37,26 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
-            myAnim.SetBool("JUMP",true);
-        }
-      
+            myAnim.SetBool("JUMP", true); //jumping animation starts
+            myAnim.SetBool("IDLE", false);
+            myAnim.SetBool("FALL", false);
 
-        if (horizontalMove > 0.2f || horizontalMove < -0.2f)
+        }
+
+        if ((horizontalMove > 0.1f || horizontalMove < -0.1f) && grounded) //check if grounded and moving
         {
-            myAnim.SetBool("IDLE", true);
+             myAnim.SetBool("IDLE", true);
+             myAnim.SetBool("JUMP", false);
+             myAnim.SetBool("FALL", false);
         }
-
         else
         {
-            myAnim.SetBool("IDLE", false);
+            myAnim.SetBool("IDLE", false); //IDLE animation ends (stationary)
+            myAnim.SetBool("JUMP", false);
+            myAnim.SetBool("FALL", false);
         }
 
-        if(horizontalMove < 0f)
+        if (horizontalMove < 0f)
         {
             mySprite.flipX = true;
         }
@@ -57,41 +65,76 @@ public class PlayerControl : MonoBehaviour
             mySprite.flipX = false;
         }
 
+        
     }
 
-    void FixedUpdate()//Runs the same frequency as the physcis engine, ususally running slower than Update
-    {
+     void FixedUpdate() //Runs the same frequency as the physcis engine, ususally running slower than Update
+     {
         float moveSpeed = horizontalMove * speed;
 
         if (jump)
         {
             myBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             jump = false;
-            myAnim.SetBool("JUMP", false);
         }
 
         if (myBody.velocity.y > 0)
         {
             myBody.gravityScale = gravityScale; //check if going up
         }
+
         else if (myBody.velocity.y < 0)
         {
             myBody.gravityScale = gravityFall;
         }
 
+        else //reaching the highest point
+        {
+            myAnim.SetBool("FALL", true); //falling animation starts
+            myAnim.SetBool("JUMP", false);
+            myAnim.SetBool("IDLE", false);
+        }
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist);
 
         if (hit.collider != null && hit.transform.name == "branch")
-        //or hit.transform.tag == "Ground", tag is under Inspector section beside layer order
         {
             grounded = true;
+            myAnim.SetBool("IDLE", false); //falling animation ends (stationary)
+            myAnim.SetBool("FALL", false);
+            myAnim.SetBool("JUMP", false);
+
         }
+
         else
         {
             grounded = false;
         }
 
-         myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0f);
+        myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0f);
 
+        }
+
+    void AnimationDetection(string message)
+    {
+        if (message.Equals("End of JUMP"))
+        {
+            mySprite.sprite = spr_EndJump;
+        }
+
+        else if (message.Equals("End of FALL"))
+        {
+            mySprite.sprite = spr_EndFall;
+        }
     }
+
+    //Death collision trigger
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.name == "DeathCollisionBox")
+        {
+            SceneManager.LoadScene("Level1");
+        }
+    }
+
 }
