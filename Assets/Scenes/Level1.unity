@@ -18874,7 +18874,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013848983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 152, y: 41.5, z: 0}
+  m_LocalPosition: {x: -36, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18964,7 +18964,6 @@ MonoBehaviour:
   speed: 20
   audioSource: {fileID: 2013848990}
   thornSnd: {fileID: 8300000, guid: 02253b81be7c24b479ba7d1292723edb, type: 3}
-  bgm: {fileID: 8300000, guid: 714491324f65945a59d691e521eb4b1d, type: 3}
   ladybirdSnd: {fileID: 8300000, guid: 83e5ec3562e93478aae5297ec273f816, type: 3}
   castDist: 3
   jumpPower: 30
