@@ -8,6 +8,11 @@ public class PlayerControl : MonoBehaviour
 {
     float horizontalMove;
     public float speed = 20f;
+    public AudioSource audioSource;
+    public AudioClip thornSnd;
+    public AudioClip bgm;
+    //public AudioClip moveSnd;
+    public AudioClip ladybirdSnd;
     Rigidbody2D myBody;
     SpriteRenderer mySprite;
 
@@ -144,6 +149,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (roll)//Rolling to destroy ladybird
             {
+                audioSource.PlayOneShot(ladybirdSnd);
                 Destroy(collider.gameObject);
             }
             else
@@ -157,6 +163,7 @@ public class PlayerControl : MonoBehaviour
 
         else if(collider.gameObject.name == "thorn")
         {
+            audioSource.PlayOneShot(thornSnd);
             string sceneName = SceneManager.GetActiveScene().name;
 
             // load the same scene

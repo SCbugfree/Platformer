@@ -7,6 +7,8 @@ public class MovingUpDown : MonoBehaviour
     public Rigidbody2D rb;
     private Vector2 initialPos;
     private float speed = 3f;
+    public AudioSource dragonflyAudio;
+    public AudioClip flyingSnd;
 
     void Start()
     {
