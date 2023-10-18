@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
     public float speed = 20f;
     public AudioSource audioSource;
     public AudioClip thornSnd;
-    public AudioClip bgm;
+    //public AudioClip bgm;
     //public AudioClip moveSnd;
     public AudioClip ladybirdSnd;
     Rigidbody2D myBody;
@@ -161,19 +161,26 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        else if(collider.gameObject.name == "thorn")
+        else if (collider.gameObject.name == "thorn")
         {
             audioSource.PlayOneShot(thornSnd);
-            string sceneName = SceneManager.GetActiveScene().name;
 
-            // load the same scene
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            if (audioSource.isPlaying)
+            {
+                Invoke("Respawn", thornSnd.length);
+            }
         }
         else
         {
 
         }
 
+    }
+
+    void Respawn()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
 }
