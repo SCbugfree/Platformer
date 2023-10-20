@@ -121,7 +121,20 @@ public class PlayerControl : MonoBehaviour
         myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0f);
 
      }
-    
+
+    void LateUpdate()
+    {
+        float rotationX = transform.localEulerAngles.x;
+
+        if (rotationX > 45)
+        {
+            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y, 0);
+        }
+        else if (rotationX < -45)
+        {
+            transform.localEulerAngles = new Vector3(-45, transform.localEulerAngles.y, 0);
+        }
+    }
 
 
     //Death collision trigger
