@@ -10,11 +10,11 @@ public class PlayerControl : MonoBehaviour
     public float speed = 20f;
     public AudioSource audioSource;
     public AudioClip thornSnd;
-    //public AudioClip bgm;
-    //public AudioClip moveSnd;
     public AudioClip ladybirdSnd;
     Rigidbody2D myBody;
     SpriteRenderer mySprite;
+
+    public TrailRenderer trail;
 
     bool grounded = true;
 
@@ -124,15 +124,31 @@ public class PlayerControl : MonoBehaviour
 
     void LateUpdate()
     {
-        float rotationX = transform.localEulerAngles.x;
+        float rotationX = transform.rotation.eulerAngles.x;
+        float rotationY = transform.rotation.eulerAngles.y;
+
+        Debug.Log("RotationX"+rotationX);
+        Debug.Log("RotationY" + rotationY);
 
         if (rotationX > 45)
         {
-            transform.localEulerAngles = new Vector3(45, transform.localEulerAngles.y, 0);
+            transform.localEulerAngles = new Vector3(45, transform.rotation.eulerAngles.y, 0);
         }
         else if (rotationX < -45)
         {
-            transform.localEulerAngles = new Vector3(-45, transform.localEulerAngles.y, 0);
+            transform.localEulerAngles = new Vector3(-45, transform.rotation.eulerAngles.y, 0);
+        }
+        else if(rotationY > 45)
+        {
+            transform.localEulerAngles = new Vector3(transform.rotation.eulerAngles.x, 45, 0);
+        }
+        else if(rotationY < -45)
+        {
+            transform.localEulerAngles = new Vector3(transform.rotation.eulerAngles.x, -45, 0);
+        }
+        else
+        {
+
         }
     }
 
