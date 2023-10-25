@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
     public float gravityFall = 40f;
     bool jump = false;
     bool roll = false;
+    public bool slashedThorn = false;
 
     Animator myAnim;
 
@@ -193,6 +194,7 @@ public class PlayerControl : MonoBehaviour
         else if (collider.gameObject.name == "thorn")
         {
             audioSource.PlayOneShot(thornSnd);
+            slashedThorn = true;
 
             if (audioSource.isPlaying)
             {
@@ -201,7 +203,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-
+            slashedThorn = false;
         }
 
     }

@@ -12205,6 +12205,7 @@ GameObject:
   - component: {fileID: 644393470}
   - component: {fileID: 644393469}
   - component: {fileID: 644393468}
+  - component: {fileID: 644393472}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12262,7 +12263,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 21
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12293,6 +12294,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &644393472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644393467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8f8be3797034186b36389e19227bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.16363144
+      value: 0.008045701
+      inSlope: 0.09108761
+      outSlope: 0.09108761
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.10523027
+      value: 0.032535672
+      inSlope: -0.09001481
+      outSlope: -0.09001481
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.18211207
+    - serializedVersion: 3
+      time: 1.0908508
+      value: -0.00006484985
+      inSlope: -0.033076137
+      outSlope: -0.033076137
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  timeShake: 1
+  playerObject: {fileID: 1146863461}
 --- !u!1 &669734400
 GameObject:
   m_ObjectHideFlags: 0
@@ -18604,6 +18652,7 @@ MonoBehaviour:
   jumpPower: 25
   gravityScale: 4
   gravityFall: 40
+  slashedThorn: 0
 --- !u!50 &1146863463
 Rigidbody2D:
   serializedVersion: 4
@@ -18732,7 +18781,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146863461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 169.9, y: 27.1, z: 0}
+  m_LocalPosition: {x: -22.2, y: 2.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26242,7 +26291,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 0fefd657f93b245d293dfc3da9c45456, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc95e3bb60af244ca9fbbfc893aa61a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -26261,8 +26310,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836911257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.1796, y: -2.8036, z: 0.79644173}
-  m_LocalScale: {x: 0.922402, y: 0.922402, z: 0.922402}
+  m_LocalPosition: {x: 53.7238, y: -14.2873, z: 0.79644173}
+  m_LocalScale: {x: 1.2249815, y: 1.2970243, z: 0.8525762}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
