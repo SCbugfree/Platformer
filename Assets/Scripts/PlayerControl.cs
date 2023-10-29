@@ -31,12 +31,21 @@ public class PlayerControl : MonoBehaviour
     public GameObject rp;
     private Transform respawnPoint;
 
+    public GameObject filter;
+
+    public Vector3 velocity;
+    float angle; //store original angle
+
+    public float min_angle = -45f;
+    public float max_angle = 30f;
+
     void Start()
     {
         myBody = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
         mySprite = GetComponent<SpriteRenderer>();
         respawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+        filter.SetActive(false);
     }
 
     void Update()
@@ -126,7 +135,7 @@ public class PlayerControl : MonoBehaviour
         myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0f);
 
      }
-
+    /*
     void LateUpdate()
     {
         float rotationX = transform.rotation.eulerAngles.x;
@@ -157,6 +166,20 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    */
+    private void Rotation()
+    {
+        //conevrt velocity to angle
+        float newAngle = Mathf.Atan2(velocity.y, velocity.x);
+
+        //convert to degree and clamp value between ranges
+        newAngle = Mathf.Clamp(newAngle * Mathf.Rad2Deg, min_angle, max_angle);
+
+        angle = Mathf.Lerp(angle, newAngle, Time.deltaTime);
+
+        transform.localEulerAngles = new Vector3(0, 0, angle);
+    }
+
 
     //Death collision trigger
     void OnTriggerEnter2D(Collider2D collider)
@@ -165,6 +188,7 @@ public class PlayerControl : MonoBehaviour
         {
             case "DeathCollisionBox":
 
+                filter.SetActive(true);
                 Invoke("Respawn",0.1f);
 
                 break;
@@ -190,6 +214,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
+                    filter.SetActive(true);
                     // load the same scene
                     Invoke("Respawn", 0.1f);
                 }
@@ -202,6 +227,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (audioSource.isPlaying)
                 {
+                    filter.SetActive(true);
                     Invoke("Respawn", thornSnd.length);
                 }
 
@@ -230,6 +256,7 @@ public class PlayerControl : MonoBehaviour
         if (transform.position.x >= respawnPoint.position.x)
         {
             transform.position = respawnPoint.transform.position;
+            filter.SetActive(false);
         }
         else
         {
