@@ -28,11 +28,15 @@ public class PlayerControl : MonoBehaviour
 
     Animator myAnim;
 
+    public GameObject rp;
+    private Transform respawnPoint;
+
     void Start()
     {
         myBody = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
         mySprite = GetComponent<SpriteRenderer>();
+        respawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
     }
 
     void Update()
@@ -157,61 +161,80 @@ public class PlayerControl : MonoBehaviour
     //Death collision trigger
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.name == "DeathCollisionBox")
+        switch (collider.gameObject.name)
         {
-            string sceneName = SceneManager.GetActiveScene().name;
+            case "DeathCollisionBox":
 
-            // load the same scene
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-        }
+                Invoke("Respawn",0.1f);
 
-        else if(collider.gameObject.name == "exit")
-        {
-            SceneManager.LoadScene("Level2");
-        }
+                break;
 
-        else if(collider.gameObject.name == "exit2")
-        {
-            SceneManager.LoadScene("End");
-        }
+            case "exit":
 
-        else if(collider.gameObject.name == "ladybird")
-        {
-            if (roll)//Rolling to destroy ladybird
-            {
-                audioSource.PlayOneShot(ladybirdSnd);
-                Destroy(collider.gameObject);
-            }
-            else
-            {
-                string sceneName = SceneManager.GetActiveScene().name;
+                SceneManager.LoadScene("Level2");
 
-                // load the same scene
-                SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-            }
-        }
+                break;
 
-        else if (collider.gameObject.name == "thorn")
-        {
-            audioSource.PlayOneShot(thornSnd);
-            slashedThorn = true;
+            case "exit2":
 
-            if (audioSource.isPlaying)
-            {
-                Invoke("Respawn", thornSnd.length);
-            }
-        }
-        else
-        {
-            slashedThorn = false;
+                SceneManager.LoadScene("End");
+
+                break;
+
+            case "ladybird":
+
+                if (roll) //Rolling to destroy ladybird
+                {
+                    audioSource.PlayOneShot(ladybirdSnd);
+                    Destroy(collider.gameObject);
+                }
+                else
+                {
+                    // load the same scene
+                    Invoke("Respawn", 0.1f);
+                }
+                break;
+
+            case "thorn":
+
+                audioSource.PlayOneShot(thornSnd);
+                slashedThorn = true;
+
+                if (audioSource.isPlaying)
+                {
+                    Invoke("Respawn", thornSnd.length);
+                }
+
+                break;
+
+            case "respawnPoint1":
+
+                transform.position = rp.transform.position;
+
+                break;
+
+            case "respawnPoint2":
+
+                transform.position = rp.transform.position;
+
+                break;
         }
 
     }
 
     void Respawn()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+
+        slashedThorn = false;
+
+        if (transform.position.x >= respawnPoint.position.x)
+        {
+            transform.position = respawnPoint.transform.position;
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        }
     }
 
 }
